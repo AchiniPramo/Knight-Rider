@@ -1,38 +1,74 @@
-$(document).ready(function () {
-  const lights = $(".light");
-  let currentLight = -1;
-  let direction = "RIGHT";
-  let intervalId;
+const cards = document.getElementsByClassName("card");
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+let isRunning = false;
+let currentIndex = 0;
+let direction = 1;
+let interval;
+const audio = new Audio("/assets/audio/kitt_scanner_sound.mp3");
 
-  function updateLight() {
-    lights.css("background", "black").css("opacity", "0.2");
+const colors = ["#ff0000", "#ff1a1a", "#ff4d4d", "#ff8080", "#ffffff"];
 
-    if (direction === "RIGHT") {
-      currentLight++;
-      if (currentLight >= lights.length - 1) {
-        direction = "LEFT";
-      }
-    } else {
-      currentLight--;
-      if (currentLight <= 0) {
-        direction = "RIGHT";
-      }
-    }
-
-    lights.eq(currentLight).css("background", "red").css("opacity", "1");
+function resetCards() {
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].style.backgroundColor = "white";
   }
+}
 
-  $(".start").on("click", function () {
-    console.log("Start button clicked");
-    if (!intervalId) {
-      intervalId = setInterval(updateLight, 100);
+function animate() {
+  if (direction === 1) {
+    for (let i = 0; i < colors.length; i++) {
+      const cardIndex = currentIndex - i;
+      if (cardIndex >= 0) {
+        cards[cardIndex].style.backgroundColor = colors[i];
+      }
     }
-  });
 
-  $(".stop").on("click", function () {
-    console.log("Stop button clicked");
-    clearInterval(intervalId);
-    intervalId = null;
-    lights.css("background", "black").css("opacity", "0.2");
-  });
-});
+    currentIndex++;
+    if (currentIndex >= cards.length) {
+      direction = -1;
+      currentIndex = cards.length - 1;
+    }
+  } else {
+    for (let i = 0; i < colors.length; i++) {
+      const cardIndex = currentIndex + i;
+      if (cardIndex < cards.length) {
+        cards[cardIndex].style.backgroundColor = colors[i];
+      }
+    }
+
+    currentIndex--;
+    if (currentIndex < 0) {
+      direction = 1;
+      currentIndex = 0;
+    }
+  }
+}
+
+startBtn.onclick = function () {
+  if (!isRunning) {
+    isRunning = true;
+
+    audio.play();
+    audio.loop = true;
+
+    interval = setInterval(animate, 150);
+
+    startBtn.style.backgroundColor = "#ff4d4d";
+    stopBtn.style.backgroundColor = "white";
+  }
+};
+
+stopBtn.onclick = function () {
+  if (isRunning) {
+    isRunning = false;
+    clearInterval(interval);
+    audio.pause();
+    audio.currentTime = 0;
+
+    currentIndex = 0;
+    direction = 1;
+    stopBtn.style.backgroundColor = "#ff4d4d";
+    startBtn.style.backgroundColor = "white";
+  }
+};

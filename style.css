@@ -1,34 +1,56 @@
-.light {
-  width: 150px;
-  height: 60px;
-  border: 1px solid white;
-  box-shadow: 0 0 10px 2px white;
-  display: flex;
-  justify-content: center;
-  border-radius: 5px;
-  margin: 5px;
-}
-#light-panel {
-  margin-top: 250px;
-  display: flex;
-  justify-content: center;
-}
 body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #121212;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  display: flex;
-  height: 100%;
-  background: black;
+  height: 100vh;
+  margin: 0;
 }
-#button-panel > button {
-  width: 150px;
-  height: 30px;
-  margin-top: 20px;
-  margin-left: 200px;
-  border-radius: 10px;
-  border: 2px solid darkred;
-  background-color: black;
-  color: white;
-  font-weight: bold;
+
+p {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ff4d4d;
+}
+
+.container {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0;
+  width: 80%;
+  margin: 15px auto;
+}
+
+.line {
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.card {
+  width: 10vw;
+  height: 4vw;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.button-container {
+  display: flex;
+  gap: 5px;
+  margin: 15px auto;
+}
+
+button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
